@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net3.1</TargetFramework>
     <UserSecretsId>aspnet-AspNetCoreTodo-866BA01B-C173-4866-B240-14D840D23317</UserSecretsId>
   </PropertyGroup>
 
