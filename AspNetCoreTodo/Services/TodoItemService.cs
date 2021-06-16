@@ -15,7 +15,15 @@ namespace AspNetCoreTodo.Services
             _context=context;
         }
 
-        public async Task<bool> AddItemAsync(TodoItem newItem)
+       
+
+        public async Task<TodoItem[]> GetIncompleteItemsAsync()
+        {
+            return await _context.Items
+            .Where( x=> x.IsDone == false)
+            .ToArrayAsync();
+        }
+         public async Task<bool> AddItemAsync(TodoItem newItem)
         {
             newItem.Id=Guid.NewGuid();
             newItem.IsDone=false;
@@ -26,11 +34,18 @@ namespace AspNetCoreTodo.Services
             return saveResult==1;    
         }
 
-        public async Task<TodoItem[]> GetIncompleteItemsAsync()
+        public async Task<bool> MarkDoneAsync(Guid id)
         {
-            return await _context.Items
-            .Where( x=> x.IsDone == false)
-            .ToArrayAsync();
+            var item= await _context.Items
+            .Where(x=>x.Id == id)
+            .SingleOrDefaultAsync();
+
+            if(item == null ) return false;
+ 
+            item.IsDone =true;
+
+            var saveResult= await _context.SaveChangesAsync();
+            return saveResult==1;
         }
     }
 }
