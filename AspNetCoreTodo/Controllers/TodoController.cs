@@ -14,6 +14,7 @@ namespace AspNetCoreTodo.Controllers
             _todoItemService=todoItemService;
         } 
 
+        
         public async Task<IActionResult> Index(){
             // 从数据库获取 to-do 条目
             var Items= await _todoItemService.GetIncompleteItemsAsync();
@@ -23,6 +24,18 @@ namespace AspNetCoreTodo.Controllers
             };
             // 使用 model 渲染视图
             return View(model);
+        }
+
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddItem(TodoItem newItem){
+            if(!ModelState.IsValid){
+                return RedirectToAction("Index");
+            }
+            var successful= await _todoItemService.AddItemAsync(newItem);
+            if(!successful){
+                return BadRequest("Could not add item.");
+            }
+            return RedirectToAction("Index");
         }
     }
 }
