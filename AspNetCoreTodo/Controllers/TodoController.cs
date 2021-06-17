@@ -12,8 +12,7 @@ namespace AspNetCoreTodo.Controllers
         public TodoController(ITodoItemService todoItemService){
             _todoItemService=todoItemService;
         } 
-
-        
+      
         public async Task<IActionResult> Index(){
             // 从数据库获取 to-do 条目
             var Items= await _todoItemService.GetIncompleteItemsAsync();
@@ -32,7 +31,7 @@ namespace AspNetCoreTodo.Controllers
             }
             var successful= await _todoItemService.AddItemAsync(newItem);
             if(!successful){
-                return BadRequest("Could not add item.");
+                return BadRequest("Could not add item.");       
             }
             return RedirectToAction("Index");
         }
@@ -49,6 +48,7 @@ namespace AspNetCoreTodo.Controllers
                 return BadRequest("Could not mark item as done");
             }
             return RedirectToAction("Index");
+
         }
     }
 }
