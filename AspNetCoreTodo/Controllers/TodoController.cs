@@ -15,10 +15,10 @@ namespace AspNetCoreTodo.Controllers
       
         public async Task<IActionResult> Index(){
             // 从数据库获取 to-do 条目
-            var Items= await _todoItemService.GetIncompleteItemsAsync();
+            var todoItems= await _todoItemService.GetIncompleteItemsAsync();
             // 把条目置于 model 中
             var model= new TodoViewModel{
-                Items= Items
+                Items= todoItems
             };
             // 使用 model 渲染视图
             return View(model);
